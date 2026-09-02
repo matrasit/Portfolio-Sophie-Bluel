@@ -185,4 +185,26 @@ footer nav ul {
 	justify-content: flex-end;
 	margin: 2em
 }
+.filter-button {
+	font-family: 'Syne';
+	color: #1D6154;
+	background-color: white;
 
+	border-radius: 60px;
+	border: 1px solid #1D6154;
+	height: 37px;
+	font-weight: 700;
+	font-size: 16px;
+	text-align: center;
+	padding: 0 20px;
+}
+.filters{
+	display: flex;
+	justify-content: center;
+	margin-bottom: 2em;
+	gap: 10px;
+}
+.filter-button.selected {
+	background-color: #1D6154;
+	color: white;
+}

@@ -52,6 +52,10 @@ body {
 	margin:auto;
 	font-family: 'Work Sans' ;
 	font-size: 14px;
+	
+	display: flex;
+	flex-direction: column;
+	
 }
 header {
 	display: flex;
@@ -185,6 +189,7 @@ footer nav ul {
 	justify-content: flex-end;
 	margin: 2em
 }
+/* apparence des boutons de filtre*/
 .filter-button {
 	font-family: 'Syne';
 	color: #1D6154;
@@ -207,4 +212,94 @@ footer nav ul {
 .filter-button.selected {
 	background-color: #1D6154;
 	color: white;
+}
+/* apparence page login */
+#login {
+	
+	width: 50%;
+	margin: auto;
+	margin-top: 20vh;
+	margin-bottom: 20vh;
+	
+}
+#login h2 {
+	text-align: center;
+	margin-bottom: 20px;
+}
+#login form {
+	text-align: left;
+	margin-top: 30px;
+	display: flex;
+	flex-direction: column;
+}
+#login label {
+	margin: 2em 0 1em 0;
+}
+#login input {
+	height: 50px;
+	font-size: 1.2em;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+#login a {
+	text-align: center;
+	text-decoration: underline;
+	color: #3D3D3D;
+}
+.lienactif {
+	font-weight: 600;
+	
+	color: #000000;
+	text-decoration: none;
+}
+a {
+	text-decoration: none;
+	color: #3D3D3D;
+	
+}
+footer li{
+	
+	color: #000000;
+	font-size: 14px;
+	font-weight: 300;
+	font-family: 'Work Sans';
+	
+}
+.loginError {
+	color: red;
+	font-size: 14px;
+	margin-top: 10px;
+}
+.edit-mode {
+	background-color: #000000;
+	color: white;
+	font-family: 'Work Sans';
+	font-weight: 400;
+	font-size: 16px;
+	text-align: center;
+	padding: 20px 8px;
+	width: 100vw;
+	margin-left: calc(50% - 50vw); 
+	/* 50% de la largeur du parent, 50vw moitier de la largeur de la fenêtre ce qui permet de ramener le bord gauche du bandeau jusqu'au bord gauche du viewport*/	
+	display: flex;
+	justify-content: center;
+	gap: 1vw;
+}
+
+.portfolio-title{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items:baseline;
+	gap: 2vw;
+}
+.modif-picture{
+	border: none;
+	background-color: white;
+	
+	font-family: 'work sans';
+	font-weight: 400;
+	font-size: 14px;
+	display: flex;
+	gap: 1vw;
 }

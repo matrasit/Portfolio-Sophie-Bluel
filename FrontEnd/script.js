@@ -27,14 +27,66 @@ function displayWorks(works) {
        // Récupère les données du projet courant et les ajoute aux éléments HTML
         image.src = works[i].imageUrl;                       
         image.alt = works[i].title;                          
-        caption.textContent = works[i].title;                
+        caption.textContent = works[i].title;   
+        figure.dataset.id = works[i].id;             
 
-        // Ajoute la figure à la galerie
-        gallery.appendChild(figure); 
+        
         
         // Ajoute l'image et sa légende à l'intérieur de la figure                    
-        figure.appendChild(image);                       
-        figure.appendChild(caption);                     
+        
+        figure.appendChild(image); 
+        figure.appendChild(caption);                       
+                 // Ajoute la figure à la galerie
+        gallery.appendChild(figure);            
+    }  
+    
+}
+function displayModalWorks(works) {   
+
+    // Sélectionne dans le DOM l'élément HTML qui possède la classe "gallery"
+    const gallery = document.querySelector(".modal-gallery");
+    gallery.innerHTML = "";                                             // Clear the gallery before displaying filtered works
+
+    for (let i = 0; i < works.length; i++) {
+        // Crée les éléments HTML nécessaires pour afficher un projet
+        const figure = document.createElement("figure");    
+        const image = document.createElement("img");
+        const buttonTrash = document.createElement("button");
+        const iconTrash = document.createElement("i");
+
+       // Récupère les données du projet courant et les ajoute aux éléments HTML
+        image.src = works[i].imageUrl;  
+        image.alt = works[i].title;      
+
+        buttonTrash.classList.add("delete-work");
+        iconTrash.classList.add("fa-regular", "fa-trash-can");
+
+                          
+                            
+        figure.appendChild(image);                                      // Ajoute l'image et sa légende à l'intérieur de la figure
+        gallery.appendChild(figure);                                    // Ajoute la figure à la galerie
+        figure.appendChild(buttonTrash);
+        buttonTrash.appendChild(iconTrash); 
+        
+        buttonTrash.addEventListener("click", async function(event){
+            const id = works[i].id;
+            console.log("Clic sur la poubelle, id :", id);
+            const token = sessionStorage.getItem("token");
+            const response = await fetch('http://localhost:5678/api/works/${id}`',{
+                method: "DELETE",
+                headers: {
+                    "Authorization": `Bearer ${token}`
+ 
+                }
+            });
+            console.log("status :", response.status);
+            console.log("ok :", response.ok);
+            if(response.ok){
+                figure.remove();
+                const mainFigure = document.querySelector(`figure[data-id="${id}"]`);
+                mainFigure.remove();
+            }
+        });
     }  
     
 }
@@ -128,21 +180,8 @@ function login() {
             
     });
 }
-
-
-async function init() {
-    const works = await getWorks();
-    const categories = await getCategories();
-    const gallery = document.querySelector(".gallery");
-    const token = sessionStorage.getItem("token");                  //Récupération du token dans sessionStorage
-    
-    if (gallery === null) {                                         // Vérifie si l'élément avec la classe "gallery" n'existe pas sur la page
-        login();                                                    // Appelle la fonction login() pour gérer la connexion de l'utilisateur
-        
-    } else {                                                        // Si l'élément avec la classe "gallery" existe sur la page, on affiche les travaux et on gère les filtres
-        displayWorks(works);
-        if (token !== null) {                                       // Vérifie si le token existe dans sessionStorage, ce qui signifie que l'utilisateur est connecté
-            const loginLink = document.querySelector(".login-link"); // Sélectionne le lien de connexion dans le DOM
+function editPage(){
+    const loginLink = document.querySelector(".login-link"); // Sélectionne le lien de connexion dans le DOM
             loginLink.textContent = "logout";                       // Change le texte du lien de connexion en "logout"
             loginLink.addEventListener("click", function(event) {   // Ajoute un événement de clic au lien de connexion
                 event.preventDefault();                              // Empêche le comportement par défaut du lien (redirection)
@@ -174,6 +213,64 @@ async function init() {
             iconEditMode.classList.add("fa-regular", "fa-pen-to-square");
             const baliseEditMode = document.querySelector(".edit-mode");
             baliseEditMode.insertBefore(iconEditMode, baliseEditMode.firstChild);
+
+            buttonModif.addEventListener("click", function(event){
+                event.preventDefault();     
+                openModalPage(buttonModif);
+                
+            });
+            const buttonCloseModale = document.querySelector(".ButtonCloseModal")
+            buttonCloseModale.addEventListener("click", function(event){
+                event.preventDefault();
+                closeModalPage(buttonModif);
+                
+            });
+}
+function openModalPage(buttonModif){
+        const openModal = document.querySelector("#modal");
+        openModal.style.display = null;                             //retire le display: none inline, donc CSS .modal1 { display: flex; } reprend la main.
+        openModal.removeAttribute("aria-hidden");                   //la modale n’est plus déclarée comme cachée pour les technologies d’assistance.
+        openModal.setAttribute("aria-modal", "true");  
+                     //indique que cette boîte de dialogue est maintenant active comme modale.
+        const closeModalOnClick = function(event){
+            closeModalPage(buttonModif);
+        }
+        openModal.addEventListener("click", closeModalOnClick);
+        
+        const modalWrapper = document.querySelector(".modal-wrapper");
+        modalWrapper.addEventListener("click", function(event){           
+            stopPropagation(event);
+        });     
+}
+
+function closeModalPage(buttonModif){
+        const openModal = document.querySelector("#modal");
+        buttonModif.focus();
+        openModal.style.display = "none";   
+        openModal.setAttribute("aria-hidden", 'true');
+        openModal.removeAttribute("aria-modal");
+        
+}
+function stopPropagation(event){
+    event.stopPropagation();
+}
+
+
+async function init() {
+    const works = await getWorks();
+    const categories = await getCategories();
+    const gallery = document.querySelector(".gallery");
+    const token = sessionStorage.getItem("token");                  //Récupération du token dans sessionStorage
+    
+    if (gallery === null) {                                         // Vérifie si l'élément avec la classe "gallery" n'existe pas sur la page
+        login();                                                    // Appelle la fonction login() pour gérer la connexion de l'utilisateur
+        
+    } else {                                                        // Si l'élément avec la classe "gallery" existe sur la page, on affiche les travaux et on gère les filtres
+        displayWorks(works);
+        displayModalWorks(works) 
+        if (token !== null) {                                       // Vérifie si le token existe dans sessionStorage, ce qui signifie que l'utilisateur est connecté
+            editPage();
+            
 
         } else {                                                    // Si le token n'existe pas, l'utilisateur n'est pas connecté, on crée les filtres pour les travaux
             createFilters(categories);

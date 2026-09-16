@@ -310,7 +310,7 @@ footer li{
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background: rgba(0, 0, 0, 0.8);
+	background: rgba(0, 0, 0, 0.3);
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -319,29 +319,39 @@ footer li{
 }
 .modal-wrapper{
 	width: 44%;
+	height: 670px;
 	background-color: white;
 	border-radius: 10px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	
+	position:relative
+}
+.buttonBack,
+.ButtonCloseModal{
+	position: absolute;
+    top: 20px;
+    width: 24px;
+    height: 24px;
+    border: none;
+    background-color: white;
+}
+.buttonBack {
+    left: 20px;
 }
 .ButtonCloseModal{
-	align-self: flex-end;
-	border-style: none;
-	
-	height: 24px;
-	width: 24px;
-	margin: 20px;
-	background-color: white;	
+	right: 20px;
 }
 .modal-titre{
 	font-family: 'work sans';
 	font-size: 26px;
 	font-weight: 400;
 	color: #000000;
+	margin-bottom: 30px;
+	margin-top: 60px;
 }
-.buttonAddPhoto{
+.buttonAddPhoto,
+.button-validate {
 	font-family: 'Syne';
 	font-weight: 700;
 	color: white;
@@ -361,7 +371,7 @@ footer li{
 	gap: 10px;
 	border-bottom: solid 1px;
 	border-color: #B3B3B3;
-	padding: 60px 0;
+	padding: 40px 0;
 }
 .modal-gallery img {
     width: 77px;
@@ -389,4 +399,115 @@ footer li{
 }
 .modal-gallery figure {
     position: relative;
+}
+/* modal add photo */
+.upload-zone input[type="file"] {
+    display: none;
+}
+.upload-zone{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 420px;
+	height: 169px;
+	border-radius: 3px;
+	background-color: #E8F1F6;
+	gap : 10px;
+}
+.preview-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.add-photo-form{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 10px;
+}
+.upload-zone .fa-image {
+    font-size: 76px;
+	color:#B9C5CC ;
+	
+	
+}
+.button-add-photo-form{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	height: 36px;
+	width: 173px;
+
+	color: #306685;
+	font-family: 'work sans';
+	font-size: 14px;
+	font-weight: 500;
+	border-radius: 50px;
+	background-color: #CBD6DC;
+	
+}
+.text-format{
+	font-size: 10px;
+	font-family: 'work sans';
+	color:#444444 ;
+	font-weight: 400;
+}
+.form-group{
+	display: flex;
+	flex-direction: column;
+	width: 420px;
+	gap: 10px;
+	margin: 20px;
+	
+}
+.form-group input,
+.form-group select {
+    width: 420px;
+    height: 51px;
+    box-sizing: border-box;
+	border: none;
+    background-color: white;
+	box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09); 	/*   X, Y, flou, étendue, couleur + opacité */
+}
+.button-validate{
+	position: relative;
+	
+	background-color: #A7A7A7;
+    color: white;
+}
+.button-validate:disabled {
+    cursor: default;
+}
+.button-validate.active {
+    background-color: #1D6154;
+	cursor: pointer;
+}
+.button-validate::before { 		/*permet de créer un **petit élément visuel en CSS**, sans créer de<div>` en JavaScript. */
+    content: "";				/* Crée un élément vide juste avant le contenu du bouton */
+    position: absolute;
+
+    width: 420px;
+    height: 1px;
+    background-color: #B3B3B3;
+
+    top: -34px;
+    left: 50%;						/*place le bord gauche de la ligne au centre du bouton */
+    transform: translateX(-50%);	/*Déplace l'élément vers la gauche de 50 % de sa propre largeur.*/
+}
+.form-group label {
+    font-family: "Work Sans";
+    font-size: 14px;
+    font-weight: 500;
+}
+.form-group input,
+.form-group select {
+    font-family: "Work Sans";
+    font-size: 14px;
+	font-weight: 400;
+}
+.error-image, .error-submit{
+	color: red;
 }

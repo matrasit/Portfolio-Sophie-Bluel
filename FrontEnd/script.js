@@ -86,7 +86,7 @@ function displayModalWorks(works) {
     }; 
 }
 function openAddPhotoPage(categories, works){
-    const buttonAddPhoto = document.querySelector(".buttonAddPhoto");
+    const buttonAddPhoto = document.querySelector(".buttonAddPhoto");           //Création de la modale pour ajouté la photo
     buttonAddPhoto.addEventListener("click", function(){
         const modalTitre = document.querySelector(".modal-titre");
         modalTitre.textContent = "Ajout photo";
@@ -95,17 +95,17 @@ function openAddPhotoPage(categories, works){
         modalGallery.style.display = "none";
         buttonAddPhoto.style.display = "none";
 
-        const buttonBack = document.createElement("button");
+        const buttonBack = document.createElement("button");                    //Crée bouton retour
         buttonBack.classList.add("buttonBack");
         const iconBack = document.createElement("i");
         iconBack.classList.add("fa-solid", "fa-arrow-left");
         buttonBack.appendChild(iconBack);
 
-        const modalWrapper = document.querySelector(".modal-wrapper");
+        const modalWrapper = document.querySelector(".modal-wrapper");          
         const buttonCloseModal = document.querySelector(".ButtonCloseModal");
         modalWrapper.insertBefore(buttonBack,buttonCloseModal);
 
-        function backToGallery() {
+        function backToGallery() {                                              // fontion qui permet de retourner sur la modale avant 
             buttonBack.remove();
             modalTitre.textContent = "Gallery Photo";
             modalGallery.style.display = "grid";
@@ -116,11 +116,11 @@ function openAddPhotoPage(categories, works){
             backToGallery();
         });
         
-        const addPhotoForm = document.createElement("form");
+        const addPhotoForm = document.createElement("form");                // création formulaire pour ajoute photo
         addPhotoForm.classList.add("add-photo-form");
         modalWrapper.appendChild(addPhotoForm);
 
-        const uploadZone = document.createElement("div");
+        const uploadZone = document.createElement("div");                   
         uploadZone.classList.add("upload-zone");
         addPhotoForm.appendChild(uploadZone);
 
@@ -151,7 +151,7 @@ function openAddPhotoPage(categories, works){
                     return;
                 }
 
-            const imageUrl = URL.createObjectURL(imageFile); //réer une URL temporaire permettant au navigateur d'afficher le fichier sélectionné
+            const imageUrl = URL.createObjectURL(imageFile); //créer une URL temporaire permettant au navigateur d'afficher le fichier sélectionné
             
             const previewImage = document.createElement("img");
             previewImage.src = imageUrl;
